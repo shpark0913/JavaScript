@@ -1,11 +1,3 @@
-## JavaScript 공부
-
-JavaScript에 대해 공부한 내용을 정리한 레포지토리입니다.
-
----
-
-
-
 ### 개요
 
 - 웹 브라우저의 역할
@@ -524,4 +516,419 @@ JavaScript에 대해 공부한 내용을 정리한 레포지토리입니다.
     - 두 피연산자가 같은 값으로 평가되는지 비교 후 boolean 값을 반환
     - 비교할 때 `암묵적 타입 변환` 을 통해 타입을 일치시킨 후 같은 값인지 비교
     - 두 피연산자가 모두 객체일 경우 메모리의 같은 객체를 바라보는지 판별
-    - **예상치 못한 결과가 발생할 수 있으므로 특별한 경우를 제외하고 사용하지 않음**
+    - ****************************************************************************************************************************************************************************************************************예상치 못한 결과가 발생할 수 있으므로 특별한 경우를 제외하고 사용하지 않음****************************************************************************************************************************************************************************************************************
+  
+  - 일치 연산자(===)
+    
+    - 두 피연산자의 값과 타입이 모두 같은 경우 true를 반환
+    - 같은 객체를 가리키거나, 같은 타입이면서 같은 값인지를 비교
+    - 엄격한 비교가 이뤄지며 `암묵적 타입 변환이 발생하지 않음`
+      - 엄격한 비교 - 두 비교 대상의 타입과 값 모두 같은지 비교하는 방식
+  
+  - 논리 연산자
+    
+    - 세 가지 논리 연산자로 구성
+      - and 연산 : &&
+      - or 연산 : ||
+      - not 연산 : !
+    - 단축 평가 지원
+      - ex) false && true ⇒ false
+      - ex) true || false ⇒ true
+  
+  - 삼항 연산자
+    
+    - 3개의 피연산자를 사용하며 조건에 따라 값을 반환하는 연산자
+    - 가장 앞의 조건식이 참이면 :(콜론) 앞의 값이 반환되며, 그 반대일 경우 : 뒤의 값이 반환되는 연산자
+    - 삼항 연산자의 결과값이기 때문에 변수에 할당 가능
+    
+    ```jsx
+    true? 1:2     // 1
+    false: 1:2    // 2
+    
+    const result = Math.PI > 4 ? 'Yep' : 'Nope'
+    console.log(result)    // Nope
+    ```
+
+---
+
+- 조건문
+  - 조건문의 종류와 특징
+    - if
+      - 조건 표현식의 결과값을 `boolean 타입으로 변환 후 참/거짓을 판단`
+    - switch
+      - 조건 표현식의 결과값이 `어느 값(case)에 해당하는지 판별`
+      - 주로 특정 변수의 값에 따라 조건을 분기할 때 활용
+        - 조건이 많아질 경우 if 문보다 가독성이 나을 수 있음
+
+---
+
+- if statement
+  
+  - if, else if, else
+    
+    - 조건은 소괄호 안에 작성
+    - 실행할 코드는 중괄호 안에 작성
+    - 블록 스코프 생성
+    
+    ```jsx
+    const name = 'manager'
+    
+    if (name === 'admin') {
+        console.log('관리자님 환영합니다.')
+    } else if (name === 'manager') {
+        console.log('매니저님 환영합니다.')
+    } else {
+        console.log(`${name}님 환영합니다.`)
+    }
+    ```
+
+- switch statement
+  
+  - 표현식의 결과값을 이용한 조건문
+  - 표현식의 결과값과 case 문의 오른쪽 값을 비교
+  - break 및 default 문은 [선택적]으로 사용 가능
+  - break 문이 없는 경우 break 문을 만나거나 default 문을 실행할 때까지 다음 조건문 실행
+  - 블록 스코프 생성
+  
+  ```jsx
+  switch(expression) {
+      case 'first value': {
+          // do something
+          [break]
+      }
+      case 'second value': {
+          //do something
+          [break]
+      }
+      [default: {
+          //do something
+      }]
+  }
+  ```
+  
+  - 이 경우 모든 console이 출력됨 (**Fall-through 현상**)
+    
+    ```jsx
+    const name = '홍길동'
+    
+    switch(name) {
+        case '홍길동': {
+            console.log('관리자님 환영합니다.')
+        }
+        case 'manager': {
+            console.log('매니저님 환영합니다.')
+        default: {
+            console.log(`${name}님 환영합니다.`)
+        }
+    }
+    
+    // 출력 결과
+    관리자님 환영합니다.
+    매니저님 환영합니다.
+    홍길동님 환영합니다.
+    ```
+    
+    - break를 작성하면 의도한 대로 동작
+    
+    ```jsx
+    const name = '홍길동'
+    
+    switch(name) {
+        case '홍길동': {
+            console.log('관리자님 환영합니다.')
+            break
+        }
+        case 'manager': {
+            console.log('매니저님 환영합니다.')
+            break
+        default: {
+            console.log(`${name}님 환영합니다.`)
+        }
+    }
+    
+    // 출력 결과
+    관리자님 환영합니다.
+    ```
+
+- if / switch
+  
+  - 조건이 많은 경우 switch문을 통해 가독성 향상을 기대할 수 있음
+  - 일반적으로 중첩 else if 문은 유지보수하기 힘들다는 문제가 있음
+
+---
+
+- 반복문
+  
+  - 종류
+    
+    - while
+    - for
+    - for … in
+    - for … of
+  
+  - while
+    
+    - 조건문이 참이기만 하면 문장을 계속해서 수행
+      
+      ```jsx
+      while (조건문) {
+          // do something
+      }
+      ```
+      
+      예시)
+      
+      ```jsx
+      let i = 0
+      
+      while (i < 6) {
+          console.log(i)
+          i += 1
+      }
+      
+      // 0, 1, 2, 3, 4, 5
+      ```
+  
+  - for
+    
+    - 특정한 조건이 거짓으로 판별될 때까지 반복
+      
+      ```jsx
+      for ( [초기문]; [조건문]; [증감문]) {
+          console.log(i)
+      }
+      
+      // 0, 1, 2, 3, 4, 5
+      ```
+  
+  - for … in
+    
+    - 객체 (object) 의 **속성을 순회**할 때 사용
+    - 배열도 순회 가능하지만 인덱스 순으로 순회한다는 보장이 없으므로 권장하지 않음
+    
+    ```jsx
+    for (variable in object) {
+        statements
+    }
+    ```
+    
+    예시)
+    
+    ```jsx
+    const fruits = { a: 'apple', b: 'banana' }
+    
+    for (const key in fruits) {
+        console.log(key)          // a, b
+        console.log(fruits[key])  // apple, banana
+    }
+    ```
+  
+  - for … of
+    
+    - 반복 가능한 객체를 순회할 때 사용
+    - 반복 가능한 (iterable) 객체의 종류 : `Array, Set, String` 등 ( Object는 TypeError )
+    
+    ```jsx
+    for (variable of object) {
+        statements
+    }
+    ```
+    
+    예시)
+    
+    ```jsx
+    const numbers = [0, 1, 2, 3]
+    
+    for (const number of numbers) {
+        console.log(number)   // 0, 1, 2, 3
+    }
+    ```
+  
+  - for … in 과 for … of 의 차이
+    
+    - for … in 은 `속성 이름` 을 통해 반복
+    - for … of 는 `속성 값` 을 통해 반복
+    
+    ```jsx
+    const arr = [3, 5, 7]
+    
+    for (const i in arr) {
+        console.log(i)     // 0 1 2
+    }
+    
+    for (const i of arr) {
+        console.log(i)     // 3 5 7
+    }
+    ```
+    
+    - for … in 은 객체 순회 적합
+      
+      ```jsx
+      // Array
+      const numbers = [10, 20, 30]
+      for (const number in numbers) {
+          console.log(number)       // 0 1 2
+      }
+      
+      // Object
+      const capitals = {
+          korea: '서울',
+          france: '파리',
+          japan: '도쿄'
+      }
+      for (const capital in capitals) {
+          console.log(capital)    // korea france japan
+      }
+      ```
+    
+    - for … of 는 Iterable 순회 적합
+      
+      ```jsx
+      // Array
+      const numbers = [10, 20, 30]
+      for (const number in numbers) {
+          console.log(number)       // 10 20 30 
+      }
+      
+      // Object
+      const capitals = {
+          korea: '서울',
+          france: '파리',
+          japan: '도쿄'
+      }
+      for (const capital in capitals) {
+          console.log(capital)    // TypeError : capitals is not iterable
+      }
+      ```
+    
+    - 참고) for … in, for … of 와 const
+      
+      - for 문
+        - for ( let i = 0; i < arr.length; i++ ) { … } 의 경우 최초 정의한 i 를 재할당하면서 사용하기 때문에 const를 사용하면 `에러 발생`
+      - for … in, for … of
+        - 재할당이 아니라, 매 반복 시 해당 변수를 새로 정의하여 사용하므로 `에러가 발생하지 않음`
+  
+  - 조건문과 반복문 정리
+    
+    | 키워드      | 종류  | 연관 키워드               | 스코프    |
+    | -------- | --- | -------------------- | ------ |
+    | if       | 조건문 | -                    | 블록 스코프 |
+    | switch   | 조건문 | case, break, default | 블록 스코프 |
+    | while    | 반복문 | break, continue      | 블록 스코프 |
+    | for      | 반복문 | break, continue      | 블록 스코프 |
+    | for … in | 반복문 | 객체 순회                | 블록 스코프 |
+    | for … of | 반복문 | Iterable 순회          | 블록 스코프 |
+
+---
+
+### 함수
+
+- 참조 타입 중 하나로써 function 타입에 속함
+- JavaScript에서 함수를 정의하는 방법은 주로 2가지로 구분됨
+  - `함수 선언식 (function declaration)`
+  - `함수 표현식 (function expression)`
+
+---
+
+- **함수 선언식 (function declaration)**
+  
+  - 일반적인 프로그래밍 언어의 함수 정의 방식
+    
+    ```jsx
+    function 함수명() {
+        // do something
+    }
+    ```
+    
+    - 예시)
+      
+      ```jsx
+      function add(num1, num2) {
+          return num1 + num2
+      }
+      
+      add(2, 7)    // 9
+      ```
+
+---
+
+- **함수 표현식 (function expression)**
+  
+  - 표현식 내에서 함수를 정의하는 방식
+  
+  - 함수 표현식은 함수의 이름을 생략한 익명 함수로 정의 가능
+    
+    ```jsx
+    변수키워드 함수명 = function () {
+        // do something
+    }
+    ```
+    
+    - 예시)
+      
+      ```jsx
+      const sub = function (num1, num2) {
+          return num1 - num2
+      }
+      
+      sub(7, 2)   // 5
+      ```
+  
+  - 표현식에서 함수 이름을 명시하는 것도 가능
+    
+    - 다만 이 경우 함수 이름은 호출에 사용되지 못하고 디버깅 용도로 사용됨
+    
+    ```jsx
+    const mySub = function namedSub(num1, num2) {
+        return num1 - num2
+    }
+    
+    mySub(1, 2)    // -1
+    namedSub(1, 2) // ReferenceError : namedSub is not defined
+    ```
+
+---
+
+- 기본 인자 (Default arguments)
+  
+  - 인자 작성 시 ‘=’ 문자 뒤 기본 인자 선언 가능
+  
+  ```jsx
+  const greetig = function (name = 'Anonymous') {
+      return `Hi ${name}`
+  }
+  
+  greeting()      // Hi Anonymous
+  ```
+
+---
+
+- 매개변수와 인자의 개수 불일치 허용
+  
+  - 매개변수보다 인자의 개수가 많을 경우
+    
+    ```jsx
+    const noArgs = function () {
+        return 0
+    }
+    
+    noArgs(1, 2, 3)       // 0
+    
+    const twoArgs = function (arg1, arg2) {
+        return [arg1, arg2]
+    }
+    
+    twoArgs(1, 2, 3)      // [1, 2]
+    ```
+  
+  - 매개변수보다 인자의 개수가 적을 경우
+    
+    ```jsx
+    const threeArgs = function (arg1, arg2, arg3) {
+        return [arg1, arg2, arg3]
+    }
+    
+    threeArgs()       // [undefined, undefined, undefined]
+    threeArgs(1)      // [1, undefined, undefined]
+    threeArgs(1, 2)   // [1, 2, undefined]
+    ```
