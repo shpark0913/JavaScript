@@ -315,7 +315,7 @@
       - 아니면 false
       
       반환
-
+    
     ```jsx
     console.log(Number.isNaN(NaN))       // true
     console.log(Number.isNaN(0 / 0))     // true
@@ -347,15 +347,15 @@
     
     - NaN을 반환하는 경우
       1. 숫자로서 읽을 수 없음
-        - parseInt(”어쩌구”), Number(undefined)
+         - parseInt(”어쩌구”), Number(undefined)
       2. 결과가 허수인 수학 계산식
-        - Math.sqrt(-1)
+         - Math.sqrt(-1)
       3. 피연산자가 NaN
-        - 7 * NaN
+         - 7 * NaN
       4. 정의할 수 없는 계산식
-        - 0 * Infinity
+         - 0 * Infinity
       5. 문자열을 포함하면서 덧셈이 아닌 계산식
-        - “가” / 3
+         - “가” / 3
 
 ---
 
@@ -386,7 +386,7 @@
     - 단, escape sequence를 사용할 수 없다
       
       === Python의 “f-string”
-
+    
     ```jsx
     const word2 = `안녕
     들 하세요`
@@ -400,12 +400,13 @@
     ---
     
     - Template literals (템플릿 리터럴)
+      
       - 내장된 표현식을 허용하는 문자열 작성 방식
-    
+      
       - Backtick(``)을 이용하며, 여러 줄에 걸쳐 문자열을 정의할 수도 있고 JavaScript의 변수를 문자열 안에 바로 연결할 수 있는 이점이 생김
-    
+      
       - 표현식을 넣을 수 있는데, 이는 $와 중괄호로 표기
-    
+        
         ```jsx
         const age = 10
         const message = `홍길동은 ${age}세입니다.`
@@ -932,3 +933,90 @@
     threeArgs(1)      // [1, undefined, undefined]
     threeArgs(1, 2)   // [1, 2, undefined]
     ```
+
+- Spread syntax ( … )
+  
+  - 전개 구문
+  
+  - 전개 구문을 사용하면 배열이나 문자열과 같이 반복 가능한 객체를 배열의 경우는 요소, 함수의 경우는 인자로 확장할 수 있음
+    
+    1. 배열과의 사용 ( 배열 복사 )
+       
+       ```jsx
+       let parts = ['shoulders', 'knees']
+       let lyrics = ['head', ...parts, 'and', 'toes']
+       // ['head', 'shoulders', 'knees', 'and', 'toes']
+       ```
+    
+    2. 함수와의 사용 (`Rest parameters`)
+       
+       - 정해지지 않은 수의 매개변수를 배열로 받을 수 있음
+       
+       ```jsx
+       function func(a, b, ...theArgs) {
+        //
+       }
+       ```
+       
+       ```jsx
+       const restOpr = function (arg1, arg2, ...restArgs) {
+          return [arg1, arg2, restArgs]
+       }
+       restOpr(1, 2, 3, 4, 5)    // [1, 2, [3, 4, 5]]
+       restOpr(1, 2)             // [1, 2, []]
+       ```
+
+---
+
+### 선언식과 표현식
+
+- 함수의 타입
+  
+  - 선언식 함수와 표현식 함수 모두 타입은 function 으로 동일
+  
+  ```jsx
+  // 함수 표현식
+  const add = function (args) { }
+  
+  // 함수 선언식
+  function sub(args) { }
+  
+  console.log(typeof add)   // function
+  console.log(typeof sub)   // function
+  ```
+
+- 호이스팅 - 선언식
+  
+  - 함수 선언식으로 정의한 함수는 var로 정의한 변수처럼 호이스팅이 발생
+  - 즉, 함수 호출 이후에 선언해도 동작
+  
+  ```jsx
+  add(2, 7)     // 9
+  
+  function add (num1, num2) {
+      return num1 + num2
+  }
+  ```
+
+- 호이스팅 - 표현식
+  
+  - 함수 표현식으로 선언한 함수는 함수 정의 전에 호출 시 에러 발생
+  - 함수 표현식으로 정의된 함수는 변수로 평가되어 변수의 scope 규칙을 따름
+  
+  ```jsx
+  sub(7, 2) // Uncaught ReferenceError : Cannot access 'sub' before initialization
+  
+  const sub = function (num1, num2) {
+      return num1 - num2
+  }
+  ```
+
+- 선언식과 표현식 정리
+  
+  |     | 선언식 (declaration)               | 표현식 (expression)                |
+  | --- | ------------------------------- | ------------------------------- |
+  | 공통점 | 데이터 타입, 함수 구성 요소 (이름, 매개변수, 바디) | 데이터 타입, 함수 구성 요소 (이름, 매개변수, 바디) |
+  | 차이점 | 익명 함수 불가능, 호이스팅 있음              | 익명 함수 가능, 호이스팅 없음               |
+  | 비고  |                                 | Airbnb Style Guide 권장 방식        |
+
+---
