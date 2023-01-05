@@ -1020,3 +1020,644 @@
   | 비고  |                                 | Airbnb Style Guide 권장 방식        |
 
 ---
+
+### Arrow Function
+
+- 화살표 함수 (Arrow Function)
+  
+  - 함수를 비교적 간결하게 정의할 수 있는 문법
+  
+  - function 키워드와 중괄호를 이용한 구문을 짧게 사용하기 위해 탄생
+    
+    1. `function` 키워드 생략 가능
+    2. 함수의 매개변수가 하나뿐이라면 매개변수의 `()` 생략 가능
+    3. 함수의 내용이 한 줄이라면 `{}` 와 `return` 도 생략 가능
+  
+  - 화살표 함수는 항상 익명 함수
+    
+    - 따라서 함수 표현식에서만 사용 가능
+  
+  - 화살표 함수 예시
+    
+    ```jsx
+    const arrow1 = function (name) {
+        return `hello, ${name}`
+    }
+    
+    // 1. function  키워드 삭제
+    const arrow2 = (name) => { return `hello, ${name}` }
+    
+    // 2. 인자가 1개일 경우에만 () 생략 가능
+    const arrow3 = name => { return `hello, ${name}` }
+    
+    // 3. 함수 바디가 return을 포함한 표현식 1개일 경우에 {}, return 삭제 가능
+    const arrow4 = name => `hello, ${name}`
+    ```
+    
+    - 명확성과 일관성을 위해 항상 인자 주위에는 괄호 ( ) 를 포함하는 것을 권장
+  
+  - 화살표 함수 응용
+    
+    ```jsx
+    // 1. 인자가 없다면? () or _로 표시 가능
+    let noArgs = ()   => 'No args'
+    noArgs = _        => 'No args'
+    
+    // 2-1. **object를 return** 한다면
+    let returnObject = () => { return { key: 'value' } }  // return 을 명시적으로 적어줌
+    
+    // 2-2. return을 적지 않으려면 괄호를 붙여야 함
+    returnObject = () => ({ key: 'value' })
+    ```
+
+---
+
+- 즉시 실행 함수(IIFE, Immediately Invoked Function Expression)
+  
+  - 선언과 동시에 실행되는 함수
+  - 함수의 선언 끝에 ( ) 를 추가하여 선언되자마자 실행하는 형태
+  - ( ) 에 값을 넣어 인자로 넘겨줄 수 있음
+  - 즉시 실행 함수는 선언과 동시에 실행되기 때문에 같은 함수를 다시 호출할 수 없음
+  - 이러한 특징을 살려 초기화 부분에 많이 사용
+  - 일회성 함수이므로 익명함수로 사용하는 것이 일반적
+  
+  ```jsx
+  (function(num) { return num ** 3 })(2)     // 8
+  
+  (num => num ** 3)(2)                       // 8
+  ```
+
+---
+
+### Array와 Object
+
+- 개요
+  - JavaScript의 데이터 타입 중 참조 타입(reference)에 해당하는 타입은 **Array**와 **Object**이며, 객체라고도 말함
+  - 객체는 속성들의 모음(collection)
+
+---
+
+### 배열 (Array)
+
+- 키와 속성들을 담고 있는 참조 타입의 객체
+- 순서를 보장하는 특징이 있음
+- 주로 대괄호([ ])를 이용하여 생성하고, 0을 포함한 양의 정수 인덱스로 특정 값에 접근 가능
+- 배열의 길이는 array.length 형태로 접근 가능
+  - 참고) 배열의 바지막 원소는 array.length -1 로 접근
+
+```jsx
+const numbers = [1, 2, 3, 4, 5]
+
+console.log(numbers[0])      // 1
+console.log(numbers[-1])     // undefined
+console.log(numbers.length)  // 5
+```
+
+```jsx
+const numbers = [1, 2, 3, 4, 5]
+
+console.log(numbers[numbers.length - 1])   // 5
+console.log(numbers[numbers.length - 2])   // 4
+console.log(numbers[numbers.length - 3])   // 3
+console.log(numbers[numbers.length - 4])   // 2
+console.log(numbers[numbers.length - 5])   // 1
+```
+
+---
+
+### 배열 메서드 기초
+
+| 메서드             | 설명                           | 비고              |
+| --------------- | ---------------------------- | --------------- |
+| reverse         | 원본 배열의 요소들의 순서를 반대로 정렬       |                 |
+| push & pop      | 배열의 가장 뒤에 요소를 추가 또는 제거       |                 |
+| unshift & shift | 배열의 가장 앞에 요소를 추가 또는 제거       |                 |
+| includes        | 배열에 특정 값이 존재하는지 판별 후 참/거짓 반환 |                 |
+| indexOf         | 배열에 특정 값이 존재하는지 판별 후 인덱스 반환  | 요소가 없을 경우 -1 반환 |
+| join            | 배열의 모든 요소를 구분자를 이용하여 연결      | 구분자 생략 시 쉼표 기준  |
+
+- `array.reverse()`
+  
+  - 원본 배열 요소들의 순서를 반대로 정렬
+  
+  ```jsx
+  const numbers = [1, 2, 3, 4, 5]
+  numbers.reverse()
+  console.log(numbers)      // [5, 4, 3, 2, 1]
+  ```
+
+- `array.push()`
+  
+  - 배열의 가장 뒤에 요소 추가
+
+- `array.pop()`
+  
+  - 배열의 마지막 요소 제거
+  
+  ```jsx
+  const numbers = [1, 2, 3, 4, 5]
+  
+  numbers.push(100)
+  console.log(numbers)   // [1, 2, 3, 4, 5, 100]
+  
+  numbers.pop()
+  console.log(numbers)   // [1, 2, 3, 4, 5]
+  ```
+
+- `array.includes(value)`
+  
+  - 배열에 특정 값(value)이 존재하는지 판별 후 true 또는 false 반환
+  
+  ```jsx
+  const numbers = [1, 2, 3, 4, 5]
+  
+  console.log(numbers.includes(1))      // true
+  console.log(numbers.includes(100))    // false
+  ```
+
+- `array.indexOf(value)`
+  
+  - 배열에 특정 값이 존재하는지 확인 후 가장 첫 번째로 찾은 요소의 인덱스 반환
+  - 만약 해당 값이 없을 경우 -1 반환
+  
+  ```jsx
+  const numbers = [1, 2, 3, 4, 5]
+  let result
+  
+  result = numbers.indexOf(3)      // 2
+  console.log(result)
+  
+  result = numbers.indexOf(100)    // -1
+  console.log(result)
+  ```
+
+- `array.join([separator])`
+  
+  - 배열의 모든 요소를 연결하여 반환
+  - separator(구분자)는 선택적으로 지정 가능하며, 생략 시 쉼표를 기본값으로 사용
+  
+  ```jsx
+  const numbers = [1, 2, 3, 4, 5]
+  let result
+  
+  result = numbers.join()     // 1, 2, 3, 4, 5
+  console.log(result)
+  
+  result = numbers.join('')   // 12345
+  console.log(result)
+  
+  result = numbers.join(' ')  // 1 2 3 4 5
+  console.log(result)
+  
+  result = numbers.join('-')  // 1-2-3-4-5
+  console.log(result)
+  ```
+
+---
+
+### 배열 메서드 심화
+
+- Array Helper Methods
+  
+  - 배열을 순회하며 특정 로직을 수행하는 메서드
+  - 메소드 호출 시 인자로 `callback 함수` 를 받는 것이 특징
+    - `callback 함수 : 어떤 함수의 내부에서 실행될 목적으로, 인자로 넘겨받는 함수`
+  
+  ---
+  
+  - `forEach`
+    
+    ```jsx
+    array.forEach((element, index, array) => {
+        // do something
+    })
+    ```
+    
+    - `array.forEach(callback(element[, index[,array]]))`
+    - 인자로 주어지는 함수(콜백 함수)를 배열의 각 요소에 대해 한 번씩 실행
+      - 콜백 함수는 3가지 매개변수로 구성
+        1. element : 배열의 요소
+        2. index : 배열 요소의 인덱스
+        3. array : 배열 자체
+      - **반환값(return) 없음**
+    
+    ```jsx
+    // 1. 일단 사용해보기
+    
+    const colors = ['red', 'blue', 'green']
+    
+    printFunc = function (color) {
+        console.log(color)
+    }
+    
+    colors.forEach(printFunc)
+    
+    // red
+    // blue
+    // green
+    ```
+    
+    ```jsx
+    // 2. 함수 정의를 인자로 넣어보기
+    
+    colors.forEach(function (color) {
+        console.log(color)
+    })
+    ```
+    
+    ```jsx
+    // 3. 화살표 함수 적용하기
+    
+    colors.forEach((color) => {
+        return console.log(color)
+    })
+    ```
+    
+    ---
+  
+  - `map`
+    
+    ```jsx
+    array.map((element, index, array) => {
+        // do something
+    })
+    ```
+    
+    - `array.map(callback(element[, index[, array]]))`
+    - 배열의 각 요소에 대해 콜백 함수를 한 번씩 실행
+    - **콜백 함수의 반환 값을 요소로 하는 새로운 배열 반환**
+    - 기존 배열 전체를 다른 형태로 바꿀 때 유용
+      - `forEach + return` 이라고 생각하기
+    
+    ```jsx
+    // 1. 일단 사용해보기
+    
+    const numbers = [1, 2, 3]
+    
+    // 함수 정의 (표현식)
+    const doubleFunc = function (number) {
+        return number * 2
+    }
+    
+    // 함수를 다른 함수의 인자로 넣기 (콜백 함수)
+    const doubleNumbers = numbers.map(doubleFunc)
+    console.log(doubleNumbers)   // [2, 4, 6]
+    ```
+    
+    ```jsx
+    // 2. 함수 정의를 인자로 넣어보기
+    
+    const doubleNumbers = numbers.map(function (number) {
+        return number * 2
+    })
+    console.log(doubleNumbers)   // [2, 4, 6]
+    ```
+    
+    ```jsx
+    // 3. 화살표 함수 적용하기
+    
+    const doubleNumbers = numbers.map((number) => {
+        return number * 2
+    })
+    console.log(doubleNumbers)   // [2, 4, 6]
+    ```
+    
+    ---
+  
+  - `filter`
+    
+    ```jsx
+    array.filter((element, index, array) => {
+        // do something
+    })
+    ```
+    
+    - `array.filter(callback(element[, index[, array]]))`
+    - 배열의 각 요소에 대해 콜백 함수를 한 번씩 실행
+    - **콜백 함수의 반환 값이 true인 요소들만 모아서 새로운 배열 반환**
+    - 기존 배열의 요소들을 필터링할 때 유용
+    
+    ```jsx
+    // 1. 일단 사용해보기
+    
+    const products = [
+        { name: 'cucumber', type: 'vegetable' },
+        { name: 'banana', type: 'fruit' },
+        { name: 'carrot', type: 'vegetable' },
+        { name: 'apple', type: 'fruit' },
+    ]
+    
+    // 함수 정의하고
+    const fruitFilter = function (product) {
+        return product.type === 'fruit'
+    }
+    
+    // 콜백으로 넘기고
+    const fruits = products.filter(fruitFilter)
+    
+    console.log(fruits)
+    // [{ name: 'banana', type: 'fruit' }, { name: 'apple', type: 'fruit' } ]
+    ```
+    
+    ```jsx
+    // 2. 함수 정의를 인자로 넣어보기
+    
+    const fruits = products.filter(function (product) {
+        return product.type === 'fruit'
+    })
+    ```
+    
+    ```jsx
+    // 3. 화살표 함수 적용하기
+    
+    const fruits = products.filter((product) => {
+        return product.type === 'fruit'
+    })
+    ```
+    
+    ---
+  
+  - `reduce`
+    
+    ```jsx
+    array.reduce((acc, element, index, array) => {
+        // do something
+    }, initalValue)
+    ```
+    
+    - `array.reduce(callback(acc, element, [index[, array]])[, initialValue])`
+    - 인자로 주어지는 함수(콜백 함수)를 배열의 각 요소에 대해 한 번씩 실행해서, 하나의 결과 값을 반환
+    - 즉, 배열을 하나의 값으로 계산하는 동작이 필요할 때 사용(총합, 평균 등)
+    - map, filter 등 여러 배열 메서드 동작을 대부분 대체할 수 있음
+    - reduce 메서드의 주요 매개변수
+      - acc
+        - 이전 callback 함수의 반환 값이 누적되는 변수
+      - initialValue (optional)
+        - 최초 callback 함수 호출 시 acc에 할당되는 값, default 값은 배열의 첫 번째 값
+    - reduce의 첫번째 매개변수인 콜백함수의 첫번째 매개변수(acc)는 누적된 값(전 단계까지의 결과)
+    - reduce의 두번째 매개변수인 initialValue는 누적될 값의 초기값, 지정하지 않을 시 첫번째 요소의 값이 됨
+    - `빈 배열의 경우 initialValue를 제공하지 않으면 에러 발생`
+    
+    ```jsx
+    const tests = [90, 90, 80, 77]
+    
+    // 총합
+    const sum = tests.reduce(function (total, x) {
+        return total + x
+    }, 0)         // 여기서 0 생략 가능
+    
+    // 화살표 함수
+    const sum = tests.reduce((total, x) => total + x, 0)
+    
+    // 평균
+    const sum = tests.reduce((total, x) => total + x, 0) / tests.length
+    ```
+    
+    - reduce 동작 방식
+      
+      ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/4804e0ff-eab8-4897-a158-c8896cb86a20/Untitled.png)
+
+    ---
+
+- `find`
+  
+  ```jsx
+  array.find((element, index, array) => {
+      // do something
+  }
+  ```
+  
+  - `array.find(callback(element[, index[, array]]))`
+  - 배열의 각 요소에 대해 콜백 함수를 한 번씩 실행
+  - 콜백 함수의 반환 값이 true면, 조건을 만족하는 첫번째 요소를 반환
+  - 찾는 값이 배열에 없으면 undefined 반환
+  
+  ```jsx
+  const avengers = [
+      { name: 'Tony Stark', age: 45 },
+    { name: 'Steve Rogers', age: 32 },
+      { name: 'Thor', age: 40 }
+  ]
+  
+  const avenger = avengers.find(function (avenger) {
+      return avenger.name === 'Tony Stark'
+  })
+  
+  // 화살표 함수 적용
+  const avenger = avengers.find((avenger) => {
+      return avenger.name === 'Tony Stark'
+  })
+  ```
+  
+  ---
+
+- `some`
+  
+  ```jsx
+  array.some((element, index, array) => {
+      // do something
+  }
+  ```
+  
+  - `array.some(callback(element[, index[, array]]))`
+  - 배열의 요소 중 하나라도 주어진 판별 함수를 통과하면 true 반환
+  - 모든 요소가 통과하지 못하면 거짓 반환
+  - 빈 배열은 항상 false 반환
+  
+  ```jsx
+  const arr = [1, 2, 3, 4, 5]
+  
+  const result = arr.some((elem) => {
+      return elem % 2 === 0
+  })
+  //true
+  ```
+  
+  ---
+
+- `every`
+  
+  ```jsx
+  array.every((element, index, array) => {
+      // do something
+  })
+  ```
+  
+  - `array.every(callback(element[, index[, array]]))`
+  - 배열의 모든 요소가 주어진 판별 함수를 통과하면 true 반환
+  - 하나의 요소라도 통과하지 못하면 false 반환
+  - 빈 배열은 항상 true 반환
+  
+  ```jsx
+  const arr = [1, 2, 3, 4, 5]
+  
+  const result = arr.every((elem) => {
+      return elem % 2 === 0
+  })
+  //false
+  ```
+  
+  ---
+
+- 배열 순회 비교
+  
+  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/ebd95bdb-3a8c-4dda-b79f-8ae81a98b97b/Untitled.png)
+
+---
+
+### 객체 (Object)
+
+- 개요
+  
+  - 객체는 속성(property)의 집합이며
+  - 중괄호 내부에 key와 value의 쌍으로 표현
+  - key
+    - 문자열 타입만 가능
+    - key 이름에 띄어쓰기 등의 구분자가 있으면 따옴표로 묶어서 표현
+  - value
+    - 모든 타입(함수 포함) 가능
+  - 객체 요소 접근
+    - 점(.) 또는 대괄호([ ])로 가능
+    - key 이름에 띄어쓰기 같은 구분자가 있으면 대괄호 접근만 가능
+
+- 예시
+  
+  ```jsx
+  const me = {
+      name: 'jack',
+      phoneNumber: '01012345678',
+      'samsung products': {
+          buds: 'Galaxy Buds pro',
+          galaxy: 'Galaxy s99'
+      },
+  }
+  
+  console.log(me.name)
+  console.log(me['name'])
+  console.log(me['samsung products'])
+  console.log(me.samsung products])    // 불가능
+  console.log(me['samsung products'].buds)
+  ```
+
+- 객체 관련 ES6 문법 익히기
+  
+  1. 속성명 축약
+  2. 메서드명 축약
+  3. 계산된 속성명 사용
+  4. 구조 분해 할당
+  5. 객체 전개 구문(Spread Operator)
+1. 속성명 축약
+   
+   - 객체를 정의할 때 key와 할당하는 변수의 이름이 같으면 예시와 같이 축약 가능
+   
+   ```jsx
+   // ES5
+   var books = ['Learning JavaScript', 'Learning Python']
+   var magazines = ['Vogue', 'Science']
+   
+   var bookShop = {
+      books: books,
+      magazines: magazines,
+   }
+   console.log(bookShop)
+   
+   /*
+   {
+      books: ['Learning JavaScript', 'Learning Python'],
+      magazines: ['Vogue', 'Science']
+   }
+   */
+   
+   // ES6+
+   const books = ['Learning JavaScript', 'Learning Python']
+   const magazines = ['Vogue', 'Science']
+   
+   const bookShop = {
+      books,
+      magazines,
+   }
+   console.log(bookShop)
+   
+   /*
+   {
+      books: ['Learning JavaScript', 'Learning Python'],
+      magazines: ['Vogue', 'Science']
+   }
+   */
+   ```
+
+2. 메서드명 축약
+   
+   - 메서드 선언 시 function 키워드 생략
+   
+   ```jsx
+   // ES5
+   var obj = {
+      greeting: function () {
+          console.log('Hi~')
+      }
+   }
+   
+   obj.greeting()     // Hi~
+   ```
+   
+   ```jsx
+   // ES6+
+   const obj = {
+      greeting() {
+          console.log('Hi~')
+      }
+   }
+   
+   obj.greeting()     // Hi~
+   ```
+
+3. 계산된 속성
+   
+   - 객체를 정의할 때 key의 이름을 표현식을 이용하여 동적으로 생성 가능
+   
+   ```jsx
+   const key = 'country'
+   const value = ['한국', '미국', '일본', '중국']
+   
+   const myObj = {
+      [key]: value,
+   }
+   
+   console.log(myObj)         // { country: ['한국', '미국', '일본', '중국'] }
+   console.log(myObj.country) // ['한국', '미국', '일본', '중국']
+   ```
+
+4. 구조 분해 할당
+   
+   - 배열 또는 객체를 분해하여 속성을 변수에 쉽게 할당할 수 있는 문법
+   
+   ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/288dfb06-6038-4891-b9c6-c93f6286df69/Untitled.png)
+
+5. Spread syntax (…)
+   
+   - 배열과 마찬가지로 전개구문을 사용해 객체 내부에서 객체 전개 가능
+   
+   - 얕은 복사에 활용 가능
+     
+     ```jsx
+     const obj = {b: 2, c: 3, d: 4}
+     const newObj = {a: 1, ...obj, e: 5}
+     
+     console.log(newObj)   // {a: 1, b: 2, c: 3, d: 4, e: 5}
+     ```
+- JSON
+  
+  - JavaScript Object Notation
+  - Key - Value 형태로 이루어진 자료 표기법
+  - JavaScript의 Object와 유사한 구조를 가지고 있지만 Object는 그 자체로 타입이고, JSON은 형식이 있는 “문자열”
+  - 즉, JSON을 Object로 사용하기 위해서는 변환 작업이 필요
+  
+  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/565efc87-94e4-40a1-971f-b7e4607f750a/Untitled.png)
+
+- 참고) 배열은 객체다
+  
+  - 배열은 키와 속성들을 담고 있는 참조 타입의 객체
+  - 배열은 인덱스를 키로 가지며 length 프로퍼티를 갖는 특수한 객체
+  
+  ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2af22412-22af-4e3d-9317-9d5e32e60ad7/Untitled.png)
