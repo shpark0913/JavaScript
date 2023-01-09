@@ -1737,12 +1737,15 @@ console.log(numbers[numbers.length - 5])   // 1
 ### DOM 조작
 
 - 개요
+  
   - Document가 제공하는 기능을 사용해 웹 페이지 문서 조작하기
   - DOM 조작 순서
     1. 선택 (Select)
     2. 조작 (Manipulation)
        - 생성, 추가, 삭제 등
+
 - 선택 관련 메서드
+  
   - `document.querySelector(selector)`
     - 제공한 선택자와 일치하는 element 한 개 선택
     - 제공한 CSS selector를 만족하는 첫 번째 element 객체를 반환 (없다면 null 반환)
@@ -1828,3 +1831,223 @@ console.log(numbers[numbers.length - 5])   // 1
    - `...`
 
 ---
+
+
+
+## Event
+
+- 개요
+  - `Event` 란 프로그래밍하고 있는 시스템에서 일어나는 사건(action) 혹은 발생(occurence)으로, 각 이벤트에 대해 조작할 수 있도록 특정 시점을 시스템이 알려주는 것
+    - 예를 들어, 사용자가 웹 페이지의 버튼을 클릭한다면 클릭에 대해 이벤트가 발생하고 우리는 이벤트를 통해 클릭이라는 사건에 대한 결과를 받거나, 조작을 할 수 있음
+  - 클릭 말고도 웹에서는 각양각색의 Event가 존재
+    - 키보드 키 입력, 브라우저 닫기, 데이터 제출, 텍스트 복사 등
+
+---
+
+- Event object
+  - 네트워크 활동이나 사용자와의 상호작용 같은 사건의 발생을 알리기 위한 객체
+  - Event 발생
+    - 마우스를 클릭하거나 키보드를 누르는 등 사용자 행동으로 발생할 수도 있고
+    - 특정 메서드를 호출하여 프로그래밍적으로도 만들어 낼 수 있음
+  - DOM 요소는 Event를 받고 (`"수신"`)
+  - 받은 Event를 `"처리"` 할 수 있음
+    - Event 처리는 주로 `addEventListener()` 라는 Event 처리기(Event handler)를 다양한 html 요소에 `"부착"` 해서 처리함
+
+---
+
+### Event handler - `addEventListener()`
+
+- **대상**에 **특정 Event**가 발생하면, **할 일**을 등록하자
+  - **EventTarget**.addEventListener(**type**, **listener**)
+- `EventTarget.addEventListener(type, listener[, options])`
+  - 지정한 Event가 대상에 전달될 때마다 호출할 함수를 설정
+  - Event를 지원하는 모든 객체(Element, Document, Window 등)를 대상(EventTarget)으로 지정 가능
+- `EventTarget.addEventListener(**type**, listener[, options])`
+  - type
+    - 반응할 Event 유형을 나타내는 대소문자 구분 문자열
+    - 대표 이벤트
+      - input, click, submit, …
+- `EventTarget.addEventListener(type, **listener**[, options])`
+  - listener
+    - 지정된 타입의 Event를 수신할 객체
+    - JavaScript function 객체 (콜백 함수)여야 함
+    - 콜백 함수는 발생한 Event의 데이터를 가진 Event 객체를 유일한 매개변수로 받음
+- `addEventListener` 정리
+  - ~ 하면 ~ 한다.
+    - 클릭하면, 경고창을 띄운다…
+    - 특정 Event가 발생하면, 할 일(콜백 함수)을 등록한다…
+
+---
+
+### Event 취소
+
+- `event.preventDefault()`
+  - 현재 Event의 기본 동작을 중단
+  - HTML 요소의 기본 동작을 작동하지 않게 막음
+  - HTML 요소의 기본 동작 예시
+    - a 태그 : 클릭 시 특정 주소로 이동
+    - form 태그 : form 데이터 전송
+
+---
+
+### [참고] lodash
+
+- 모듈성, 성능 및 추가 기능을 제공하는 JavaScript 유틸리티 라이브러리
+- array, object 등 자료구조를 다룰 때 사용하는 유용하고 간편한 유틸리티 함수들을 제공
+- 함수 예시
+  - reverse, sortBy, range, random …
+- [https://lodash.com/](https://lodash.com/)
+
+---
+
+### this
+
+- 어떠한 object를 가리키는 키워드
+  - java에서의 this와 python에서으이 self는 인스턴스 자기자신을 가리킴
+- JavaScript의 함수는 호출될 때 this를 암묵적으로 전달 받음
+- JavaScript에서의 this는 일반적인 프로그래밍 언어에서의 this와 조금 다르게 동작
+- JavaScript는 해당 `함수 호출 방식` 에 따라 this에 바인딩 되는 객체가 달라짐
+- 즉, 함수를 선언할 때 this에 객체가 결정되는 것이 아니고, 함수를 호출할 때 `함수가 어떻게 호출 되었는지에 따라 동적으로 결정` 됨
+
+### this INDEX
+
+1. 전역 문맥에서의 this
+
+2. 함수 문맥에서의 this
+   
+   - 단순 호출
+   - Method (객체의 메서드로서)
+   - Nested
+- 전역 문맥에서의 this
+  
+  - 브라우저의 전역 객체인 window를 가리킴
+    
+    - 전역 객체는 모든 객체의 유일한 최상위 객체를 의미
+    
+    ```jsx
+    console.log(this)            // window
+    ```
+
+- 함수 문맥에서의 this
+  
+  - 함수의 this 키워드는 다른 언어와 조금 다르게 동작
+    
+    - this의 값은 함수를 호출한 방법에 의해 결정됨
+    - 함수 내부에서 this의 값은 함수를 호출한 방법에 의해 좌우됨
+  1. `단순 호출`
+     
+     1. 전역 객체를 가리킴
+     
+     2. 전역은 브라우저에서는 window, Node.js는 global을 의미함
+        
+        ```jsx
+        const myFunc = function () {
+          console.log(this)
+        }
+        
+        // 브라우저
+        myFunc()    // window
+        
+        // Node.js
+        myFunc()    // global
+        ```
+  
+  2. `Method (Function in Object, 객체의 메서드로서)`
+     
+     1. 메서드로 선언하고 호출한다면, 객체의 메서드이므로 해당 객체가 바인딩
+        
+        ```jsx
+        const myObj = {
+          data: 1,
+          myFunc() {
+              console.log(this)      // myObj
+              console.log(this.data) // 1
+          }
+        }
+        
+        myObj.myFunc()             // myObj
+        ```
+  
+  3. `Nested (Function 키워드)`
+     
+     1. forEach의 콜백 함수에서의 this가 메서드의 객체를 가리키지 못하고 전역 객체 window를 가리킴
+     2. 단순 호출 방식으로 사용되었기 때문
+     3. 이를 해결하기 위해 등장한 함수 표현식이 바로 `화살표 함수`
+     
+     ```jsx
+     const myObj = {
+        numbers: [1],
+        myFunc() {
+            console.log(this)      // myObj
+            this.numbers.forEach(function (number) {
+                console.log(number)  // 1
+                console.log(this)    // window
+            })
+        }
+     }
+     
+     myObj.myFunc()
+     ```
+     
+     - Nested (화살표 함수)
+       
+       - 이전에 일반 function 키워드와 달리 메서드의 객체를 잘 가리킴
+       - 화살표 함수에서 this는 자신을 감싼 정적 범위
+       - 자동으로 한 단계 상위의 scope의 context를 바인딩
+       
+       ```jsx
+       const myObj = {
+          numbers: [1],
+          myFunc() {
+              console.log(this)      // myObj
+              this.numbers.forEach((number) => {
+                  console.log(number)  // 1
+                  console.log(this)    // myObj
+              })
+          }
+       }
+       
+       myObj.myFunc()
+       ```
+
+---
+
+### 화살표 함수
+
+- 화살표 함수는 호출의 위치와 상관없이 상위 스코프를 가리킴
+- Lexical scope
+  - 함수를 어디서 호출하는지가 아니라 `어디에 선언` 하였는지에 따라 결정
+  - Static scope라고도 하며 대부분의 프로그래밍 언어에서 따르는 방식
+- 따라서 함수 내의 함수 상황에서 화살표 함수를 쓰는 것을 권장
+- 하지만..
+  - addEventListener에서의 콜백 함수는 특별하게 function 키워드의 경우 addEventListener를 호출한 대상을 뜻함 (`event.target`)
+  - 반면 화살표 함수의 경우 상위 스코프를 지칭하기 때문에 window 객체가 바인딩 된다
+- 결론
+  - addEventListener의 콜백 함수는 function 키워드를 사용하기
+
+```jsx
+<body>
+  <button id="function">function</button>
+  <button id="arrow">arrow function</button>
+
+  <script>
+    const functionButton = document.querySelector('#function')
+    const arrowButton = document.querySelector('#arrow')
+
+    functionButton.addEventListener('click', function(event) {
+      console.log(this);      // <button id="function">function</button>
+    })
+
+    arrowButton.addEventListener('click', event => {
+      console.log(this);      // window
+    })
+  </script>
+</body>
+```
+
+---
+
+### this 정리
+
+- 이렇게 this가 런타임에 결정되면 장점도 있고 단점도 있음
+- 함수(메서드)를 하나만 만들어 여러 객체에서 재사용할 수 있다는 것은 장점이지만, 이런 유연함이 실수로 이어질 수 있다는 것은 단점
