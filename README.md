@@ -1832,8 +1832,6 @@ console.log(numbers[numbers.length - 5])   // 1
 
 ---
 
-
-
 ## Event
 
 - 개요
@@ -2058,58 +2056,63 @@ console.log(numbers[numbers.length - 5])   // 1
 
 - 응답이 먼저 오는 순서대로 처리하지 말고, 아예 여러 작업을 동시에 처리하면 되지 않을까?
 - JavaScript는 한 번에 하나의 일만 수행하는 Single Thread 언어로 동시에 여러 작업을 처리할 수 없음
-    - Thread란?
-        - 작업을 처리할 때 실제로 작업을 수행하는 주체로, multi-thread라면 업무를 수행할 수 있는 주체가 여러 개라는 의미
+  - Thread란?
+    - 작업을 처리할 때 실제로 작업을 수행하는 주체로, multi-thread라면 업무를 수행할 수 있는 주체가 여러 개라는 의미
 - 즉, JavaScript는 하나의 작업을 요청한 순서대로 처리할 수 밖에 없다!
 - Single Thread인 JavaScript가 어떻게 비동기 처리를 할 수 있을까?
-    - JavaScript Runtime
+  - JavaScript Runtime
 
 ---
 
 ### JavaScript Runtime
 
 - Runtime
-    - 특정 언어가 동작할 수 있는 환경
+  - 특정 언어가 동작할 수 있는 환경
 - JavaScript에서 비동기와 관련한 작업은 브라우저 또는 Node 환경에서 처리
 - 이 중에서 브라우저 환경에서의 비동기 동작은 크게 아래의 요소들로 구성됨
-    1. JavaScript Engine의 `Call Stack`
-    2. `Web API`
-    3. `Task Queue`
-    4. `Event Loop`
+  1. JavaScript Engine의 `Call Stack`
+  2. `Web API`
+  3. `Task Queue`
+  4. `Event Loop`
 
 ---
 
 ### 비동기 처리 동작 방식
 
 - 브라우저 환경에서의 JavaScript의 비동기는 아래와 같이 처리된다.
-    1. 모든 작업은 Call Stack(LIFO)으로 들어간 후 처리된다.
-    2. 오래 걸리는 작업이 Call Stack으로 들어오면 Web API로 보내서 처리하도록 한다.
-    3. Web API에서 처리가 끝난 작업들은 Task Queue(FIFO)에 순서대로 들어간다.
-    4. Event Loop가 Call Stack이 비어 있는 것을 체크하고 Task Queue에서 가장 오래된 작업을 Call Stack으로 보낸다.
-
+  
+  1. 모든 작업은 Call Stack(LIFO)으로 들어간 후 처리된다.
+  2. 오래 걸리는 작업이 Call Stack으로 들어오면 Web API로 보내서 처리하도록 한다.
+  3. Web API에서 처리가 끝난 작업들은 Task Queue(FIFO)에 순서대로 들어간다.
+  4. Event Loop가 Call Stack이 비어 있는 것을 체크하고 Task Queue에서 가장 오래된 작업을 Call Stack으로 보낸다.
 1. `Call Stack`
-    1. 요청이 들어올 때마다 순차적으로 처리하는 Stack(LIFO). 기본적인 JavaScript의 Single Thread 작업 처리
-2. `Web API`
-    1. JavaScript 엔진이 아닌 브라우저에서 제공하는 runtime 환경으로 시간이 소요되는 작업을 처리 (setTimeout, DOM event, AJAX 요청 등)
-3. `Task Queue`
-    1. 비동기 처리된 Callback 함수가 대기하는 Queue(FIFO)
-4. `Event Loop`
-    1. Call Stack과 Task Queue를 지속적으로 모니터링
-    2. Call Stack이 비어 있는지 확인 후 비어 있다면 Task Queue에서 대기 중인 오래된 작업을 Call Stack 으로 Push
+   
+   1. 요청이 들어올 때마다 순차적으로 처리하는 Stack(LIFO). 기본적인 JavaScript의 Single Thread 작업 처리
 
+2. `Web API`
+   
+   1. JavaScript 엔진이 아닌 브라우저에서 제공하는 runtime 환경으로 시간이 소요되는 작업을 처리 (setTimeout, DOM event, AJAX 요청 등)
+
+3. `Task Queue`
+   
+   1. 비동기 처리된 Callback 함수가 대기하는 Queue(FIFO)
+
+4. `Event Loop`
+   
+   1. Call Stack과 Task Queue를 지속적으로 모니터링
+   2. Call Stack이 비어 있는지 확인 후 비어 있다면 Task Queue에서 대기 중인 오래된 작업을 Call Stack 으로 Push
 - 정리
-    - JavaScript는 한 번에 하나의 작업을 수행하는 Single Thread 언어로 동기적 처리를 하지만, 브라우저 환경에서는 Web API에서 처리된 작업이 지속적으로 Task Queue를 거쳐 Event Loop에 의해 Call Stack에 들어와 순차적으로 실행됨으로써 비동기 작업이 가능한 환경이 된다.
-    
+  - JavaScript는 한 번에 하나의 작업을 수행하는 Single Thread 언어로 동기적 처리를 하지만, 브라우저 환경에서는 Web API에서 처리된 작업이 지속적으로 Task Queue를 거쳐 Event Loop에 의해 Call Stack에 들어와 순차적으로 실행됨으로써 비동기 작업이 가능한 환경이 된다.
 
 ---
 
 ### Axios
 
 - JavaScript의 HTTP 웹 통신을 위한 라이브러리
+
 - node 환경은 npm을 이용해서 설치 후 사용할 수 있고,
-    
+  
     browser 환경은 CDN을 이용해서 사용할 수 있음
-    
 
 ```jsx
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -2121,61 +2124,66 @@ console.log(numbers[numbers.length - 5])   // 1
 ```
 
 - get, post 등 여러 method 사용 가능
+
 - `then` 을 이용해서 성공하면 수행할 로직을 작성
+
 - `catch` 를 이용해서 실패하면 수행할 로직을 작성
+
 - Axios 실습
-    
-    ```jsx
-    <!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
-    <body>
-        <button>야옹</button>
-    
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
-        <script>
-            console.log('고양이는 야옹');
-            const catImageSearchURL = 'https://api.thecatapi.com/v1/images/search'
-            const btn = document.querySelector('button')
-    
-            btn.addEventListener('click', function() {
-                axios.get(catImageSearchURL)
-                    .then((response) => {
-                        imgElem = document.createElement('img')
-                        imgElem.setAttribute('src', response.data[0].url)
-                        document.body.appendChild(imgElem)
-                    })
-                    .catch((error) => {
-                        console.log('실패햇다옹');
-                    })
-                    console.log('야옹야옹');
-            })
-        </script>
-    
-    </body>
-    </html>
-    ```
-    
+  
+  ```jsx
+  <!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Document</title>
+  </head>
+  <body>
+      <button>야옹</button>
+  
+      <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  
+      <script>
+          console.log('고양이는 야옹');
+          const catImageSearchURL = 'https://api.thecatapi.com/v1/images/search'
+          const btn = document.querySelector('button')
+  
+          btn.addEventListener('click', function() {
+              axios.get(catImageSearchURL)
+                  .then((response) => {
+                      imgElem = document.createElement('img')
+                      imgElem.setAttribute('src', response.data[0].url)
+                      document.body.appendChild(imgElem)
+                  })
+                  .catch((error) => {
+                      console.log('실패햇다옹');
+                  })
+                  console.log('야옹야옹');
+          })
+      </script>
+  
+  </body>
+  </html>
+  ```
+
 - 정리
-    - axios는 비동기로 데이터 통신을 가능하게 하는 라이브러리
-    - 같은 방식으로 Django REST API로 요청을 보내서 데이터를 받아온 후 처리할 수 있음
+  
+  - axios는 비동기로 데이터 통신을 가능하게 하는 라이브러리
+  - 같은 방식으로 Django REST API로 요청을 보내서 데이터를 받아온 후 처리할 수 있음
 
 ---
 
 ### Callback과 Promise
 
 - 비동기 처리의 핵심은 Web API로 들어오는 순서가 아니라 `작업이 완료되는 순서에 따라 처리` 한다는 것!
+
 - 개발자 입장에서 코드의 실행 순서가 불명확하다는 단점이 있음
-    - 어떻게 해결할까?
-        
-        ⇒ `콜백 함수를 사용하자!!!`
-        
+  
+  - 어떻게 해결할까?
+    
+      ⇒ `콜백 함수를 사용하자!!!`
 
 ---
 
@@ -2188,18 +2196,18 @@ console.log(numbers[numbers.length - 5])   // 1
 ```jsx
 const btn = document.querySelector('button')
 btn.addEventListener('click', () => {
-	alert('Completed')
+    alert('Completed')
 })
 ```
 
 - 콜백 함수를 사용하는 이유
-    - 명시적인 호출이 아닌 특정한 조건 혹은 행동에 의해 호출되도록 작성할 수 있음
-    - “요청이 들어오면”, “이벤트가 발생하면”, “데이터를 받아오면” 등의 조건으로 이후 로직을 제어할 수 있음
-    - `비동기 처리를 순차적으로 동작할 수 있게 함`
-    - 비동기 처리를 위해선ㄴ 콜백 함수의 형태가 반드시 필요함
+  - 명시적인 호출이 아닌 특정한 조건 혹은 행동에 의해 호출되도록 작성할 수 있음
+  - “요청이 들어오면”, “이벤트가 발생하면”, “데이터를 받아오면” 등의 조건으로 이후 로직을 제어할 수 있음
+  - `비동기 처리를 순차적으로 동작할 수 있게 함`
+  - 비동기 처리를 위해선ㄴ 콜백 함수의 형태가 반드시 필요함
 - 콜백 함수는 비동기 작업을 순차적으로 실행할 수 있게 하는 반드시 필요한 로직이지만, 콜백 지옥은 반드시 나타나는 문제
-    - 코드의 가독성을 해침
-    - 유지 보수가 어려움
+  - 코드의 가독성을 해침
+  - 유지 보수가 어려움
 
 ---
 
@@ -2209,14 +2217,14 @@ btn.addEventListener('click', () => {
 - “작업이 끝나면 실행시켜줄게”라는 약속(promise)
 - `비동기 작업의 완료 또는 실패를 나타내는 객체`
 - Promise 기반의 클라이언트가 바로 이전에 사용한 Axios 라이브러리
-    - 성공에 대한 약속 `then()`
-    - 실패에 대한 약속 `catch()`
+  - 성공에 대한 약속 `then()`
+  - 실패에 대한 약속 `catch()`
 - `then(callback)`
-    - 요청한 작업이 성공하면 callback 실행
-    - callback은 **이전 작업의 성공 결과**를 인자로 전달 받음
+  - 요청한 작업이 성공하면 callback 실행
+  - callback은 **이전 작업의 성공 결과**를 인자로 전달 받음
 - `catch(callback)`
-    - then()이 하나라도 실패하면 callback 실행
-    - callback은 **이전 작업의 실패 객체**를 인자로 전달 받음
+  - then()이 하나라도 실패하면 callback 실행
+  - callback은 **이전 작업의 실패 객체**를 인자로 전달 받음
 - then과 catch 모두 항상 promise 객체를 반환. 즉, 계속해서 chaining을 할 수 있음
 - `axios로 처리한 비동기 로직이 항상 promise 객체를 반환`. 그래서 then을 계속 이어 나가면서 작성할 수 있었던 것
 
@@ -2224,7 +2232,7 @@ btn.addEventListener('click', () => {
 // promise 방식
 
 work1()
-	.then((result1) => {
+    .then((result1) => {
         // work2
         return result2
     })
@@ -2245,11 +2253,11 @@ work1()
 
 - 비동기 콜백 작성 스타일과 달리 Promise가 보장하는 특징
 1. callback 함수는 JavaScript의 Event Loop가 현재 실행 중인 Call Stack을 완료하기 이전에는 절대 호출되지 않음
-    1. Promise callback 함수는 Event Queue에 배치되는 엄격한 순서로 호출됨
+   1. Promise callback 함수는 Event Queue에 배치되는 엄격한 순서로 호출됨
 2. 비동기 작업이 성공하거나 실패한 뒤에 .then() 메서드를 이용하여 추가한 경우에도 1번과 똑같이 동작
 3. .then() 을 여러 번 사용하여 여러 개의 callback 함수를 추가할 수 있음 (Chaining)
-    1. 각각의 callback은 주어진 순서대로 하나하나 실행하게 됨
-    2. Chaining은 Promise의 가장 뛰어난 장점
+   1. 각각의 callback은 주어진 순서대로 하나하나 실행하게 됨
+   2. Chaining은 Promise의 가장 뛰어난 장점
 
 ---
 
@@ -2258,6 +2266,302 @@ work1()
 - 비동기 통신을 이용하여 화면 전체를 새로고침 하지 않아도 서버로 요청을 보내고, 데이터를 받아 화면의 일부분만 업데이트 가능
 - 이러한 ‘비동기 통신 웹 개발 기술’을 Asynchronous Javascript And XML(AJAX) 라 함
 - `AJAX의 특징`
-    - 페이지 새로고침 없이 서버에 요청
-    - 서버로부터 응답(데이터)를 받아 작업을 수행
+  - 페이지 새로고침 없이 서버에 요청
+  - 서버로부터 응답(데이터)를 받아 작업을 수행
 - 이러한 비동기 웹 통신을 위한 라이브러리 중 하나가 Axios
+
+
+
+
+
+---
+
+
+
+### ES (ECMAScript)
+
+- Ecma International이 ECMA-262 기술 규격에 따라 정의하고 있는 표준화된 스크립트 프로그래밍 언어
+- `ES6` 는 2015년, `ES5` 는 2009년에 출시 (숫자는 버전을 의미함)
+
+---
+
+## ES6 문법 정리
+
+### 1. let, const
+
+- let
+  - 블록스코프, 재할당 가능, 재선언 불가
+  - 변수 선언 키워드
+- const
+  - 블록스코프, 재할당 불가, 재선언 불가
+  - 상수 선언 키워드
+
+### 2. 템플릿 리터럴
+
+- ``(back tick) 으로 사용
+- `${}` 형식을 통해 자바스크립트 표현식 사용 가능
+
+```jsx
+// ES5 문법으로 Hello, World! 출력하기
+var str1 = ', ';
+var str2 = 'World!';
+var str3 = 'Hello' + str1 + str2;
+```
+
+```jsx
+// ES6 문법으로 Hello, World! 출력하기
+let str1 = ', ';
+let str2 = 'World!';
+let str3 = `Hello${str1} ${str2}`;
+```
+
+### 3. 객체 리터럴
+
+**💥 객체**
+
+- 객체는 JavaScript에서 데이터를 표현하는 방식 중 하나
+- key, value 쌍으로 구성됨
+
+```jsx
+let example = {
+    'name': '박시현',
+    'age': 20
+}
+
+// 프로퍼티   : 'name': '박시현' 과 'age': 20
+// 키 (key)   : 프로퍼티 명
+// 값 (value) : 프로퍼티 값
+```
+
+- JavaScript는 prototype 기반 객체지향 언어로, 다양한 객체 생성 방법 지원
+  
+  - 객체 리터럴
+  - Object 생성자 함수
+  - 생성자 함수
+  - Object.create 메서드
+  - 클래스 (ES6)
+
+- 객체 리터럴
+  
+  - 객체 생성 방식 중 가장 일반적이고 간단함
+    
+    - 컨텐츠를 그대로 대입하는 방법
+  
+  - 객체 리터럴 방식을 통해 Person이란 객체 생성해보면
+    
+    ```jsx
+    let person = {
+      name: ['Sihyun', 'Park'],
+      age: 29,
+      gender: 'male',
+      interests: ['music', 'movie'],
+      introduce: function() {
+        console.log(`${this.name[0]} ${this.name[1]} is ${this.age} years old`);
+      },
+      greeting: function() {
+        console.log(`Hi! I'm ${this.name[0]}.`);
+      }
+    };
+    ```
+    
+    - 위 객체에서 `introduce`와 `greeting` 은 함수. 객체는 property로 일반 변수 뿐만 아니라 함수 또한 가질 수 있음
+      - 이 함수를 `메서드` 라고 표현!! (메서드는 객체에 묶인 함수)
+
+- 프로퍼티 접근
+  
+  - 선언한 프로퍼티에 접근할 수 있는 방법은 2가지
+    
+    1. 마침표 표기법
+       - `person.name`, `person.age` 와 같이 접근
+    2. 대괄호 표기법
+       - `person['name']` , `person['age']` 와 같이 접근
+       - 이 경우 ‘’(따옴표) 안에 감싸주지 않으면 name이란 변수의 값으로 인식하므로 꼭 감싸기
+  
+  - 메서드도 동일
+    
+    ```jsx
+    person.introduce()
+                // Sihyun Park is 29 years old.
+    
+    person.greeting()
+                // Hi! I'm Sihyun.
+    ```
+
+- 프로퍼티 값 갱신
+  
+  - 이미 존재하는 property의 값을 수정하면 갱신됨
+  
+  ```jsx
+  person.name = 'Gyuri'
+  ```
+
+- 프로퍼티 값 생성
+  
+  - 존재하지 않는 property의 값을 할당하면 프로퍼티가 동적으로 생성됨
+  
+  ```jsx
+  person.address = 'Suwon' 
+  ```
+
+- 프로퍼티 값 삭제
+  
+  - 삭제하고자 하는 property를 delete 키워드 붙여 사용
+  - 없는 property에 접근 시 에러 없이 무시됨
+  
+  ```jsx
+  delete person.age
+  ```
+
+- 객체 리터럴 정리
+  
+  - 이전보다 훨씬 간결해진 코드로 객체 선언
+  - 메소드에 :(콜론) 이나 function을 붙이지 않아도 됨
+  - 함수명이 겹치는 경우 한 번만 사용 가능
+  - 객체의 프로퍼티를 동적으로 생성하려면 객체 리터럴 밖에서 [text + 1]과 같이 선언했어야 했는데, ES6부터는 객체 안에서 바로 속성으로 사용 가능
+  
+  ```jsx
+  const myFunc = function() {
+      console.log('myFunc')
+  }
+  
+  const text = 'TEXT'
+  
+  const obj = {
+      inside() {
+          console.log('객체 안에 바로 함수 선언')
+      },
+      myFunc,
+      [text + 1]: '박시현'
+  }
+  
+  obj.inside()  // 출력값 : 객체 안에 바로 함수 선언
+  obj.myFunc()  // 출력값 : myFunc
+  console.log(obj.TEXT1)   // 출력값 : 박시현
+  ```
+
+### 4. 화살표 함수
+
+- 함수 표현식을 화살표 함수로 표현 가능
+- 함수를 간결하게 나타낼 수 있게 되어 가독성 및 유지보수성 상승
+- 함수의 본문(body)에 return만 있는 경우 화살표 함수는 return과 {}를 생략 가능(단, 같이 생략해야함)
+- return 문에서 소괄호는 사용 가능
+
+```jsx
+// ES5
+function plusFunc(a, b) {
+    return a + b
+}
+
+// ES6
+// 함수 표현식 (화살표 함수)
+const plusFunc = (a, b) => {
+    return a + b
+}
+// 함수 표현식 (화살표 함수, 생략형)
+const plusFunc = (a, b) => a + b
+```
+
+### 5. 구조 분해 할당
+
+- 객체나 배열에서 사용
+- 값을 해체한 후 개별 값을 변수에 새로 할당하는 과정
+
+```jsx
+// 배열에서 사용
+const arr = [1, 2, 3]
+const [one, two, three] = arr
+
+one // 1
+two // 2
+three // 3
+
+////////////////////////////////////
+// 객체에서 사용
+const obj = {
+    firstName: '시현',
+    lastName: '박'
+}
+
+const { firstName, lastName } = obj
+firstName // 시현
+lastName // 박
+```
+
+### 6. Promise
+
+- JavaScript에서는 비동기 처리를 기존에는 콜백 함수를 사용한 콜백 패턴으로 함
+  - 이는 콜백지옥 발생시킴
+- 이를 해결하기 위해 Promise 도입
+- Promise 후속처리 메서드를 이용해 효율적 에러 처리 가능
+
+### 7. Class
+
+- JavaScript는 프로토타입 기반의 객체 지향 언어
+- 클래스 기반의 객체 지향 프로그래밍 가능하도록 Class 키워드 도입
+- JavaScript에서 Class는 내부적으로 프로토타입을 이용해 만들어짐
+- 호이스팅이 `let` , `const` 키워드처럼 동작
+
+### 8. String Method (includes, startsWith, endsWith)
+
+- includes : 포함 여부
+- startsWith : 시작하는지
+- endsWith : 끝나는지
+- boolean 타입을 return 함
+
+```jsx
+const str = 'Hello World Sihyun'
+str.includes("Sihyun")   // true
+str.startsWith("Hello")  // true
+str.endsWith("yun")      // true
+```
+
+### 9. Multi-line String
+
+- 과거에 문자열이 라인을 넘어간다면 `\\n` 과 `덧셈 연산자` 필요했음
+
+```jsx
+// ES5
+var str = 'asdhasfhfsahsfhfshasfhsfahsfahsfahasfh.\\n' + 
+'mxmxmxmxmxmxmxmmxmxmxmxmxmmxmxmxmxmxm.\\n'
+```
+
+- 백틱을 사용하게 되며 여러 줄의 문자열 관리가 용이해짐
+
+```jsx
+// ES6
+let str = `asdhasfhfsahsfhfshasfhsfahsfahsfahasfh
+mxmxmxmxmxmxmxmmxmxmxmxmxmmxmxmxmxmxm`;
+```
+
+### 10. Default Parameter
+
+- 함수의 매개변수 초기화
+  
+  - 기존에는 내부 작업이 필요
+  - ES6에서는 필요하지 않음
+  
+  ```jsx
+  // ES5
+  function myFunc(a, b) {
+      var a = a || 100
+      var b = b || 200
+      return a + b
+  }
+  console.log(myFunc(100))    // 300
+  
+  // ES6
+  const myFunc = ( a = 100, b = 200 ) => a + b
+  console.log(myFunc())       // 300
+  ```
+
+### 11. Module
+
+- 모듈이란?
+  - 재사용하기 위한 코드 조각
+  - 세부사항은 캡슐화, API 부분만 외부에 노출
+- type에 module을 추가시키고 확장자를 mjs로 변경하여 사용
+- 모듈은 모듈 스코프 가지며, import와 export 키워드를 이용하여 사용
+
+```jsx
+<script type="module" src="lib.mjs"></script>
+```
